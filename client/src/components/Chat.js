@@ -10,12 +10,11 @@ function Chat() {
         const data = await fetch('http://localhost:3000/chats');
         const chats = await data.json();
         setChats(chats);
-        console.log(chats);
     }
 
-    return (
-        chats.map((el) => <p key={el._id}>{el.chatName}</p> )
-    )
+    return 
+        // chats.map((el) => <p key={el._id}>{el.chatName}</p> )
+    
 }
 
 export default Chat

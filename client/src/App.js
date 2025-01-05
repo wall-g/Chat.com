@@ -1,12 +1,13 @@
 import ReactDom from 'react-dom/client';
 import Chat from './components/Chat';
-import Home from './components/Home';
+import Header from './components/Header';
+import Auth from './components/Auth';
 
 function App() {
     return (
         <>
-            <Home/>
-            <Chat/>
+            <Header/>
+            <Auth/>
         </>
 
     )
