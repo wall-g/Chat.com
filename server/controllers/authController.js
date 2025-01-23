@@ -1,12 +1,12 @@
-import User from '../models/Users';
+import User from '../models/Users.js';
 import bcrypt from 'bcrypt';
-import logger from '../utils/logger'
+import logger from '../utils/logger.js'
 
 export const signupUser = async (req, res, next) => {
-    const { username, email, password, pic } = req.body;
+    let { username, email, password, pic } = req.body;
     try {
         const existingUser = await User.findOne({ where: { email } });
-        // if email is already registered
+        // if email is already registered        
         if (existingUser) {
             const error = new Error('email is already registered');
             error.statusCode = 400;
@@ -14,7 +14,9 @@ export const signupUser = async (req, res, next) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({ username, email, hashedPassword, pic });
+        password = hashedPassword;
+        
+        const user = await User.create({ username, email, password, pic });
         logger.info(`User registered: ${email}`);
         return res.status(200).json({
             success: true,
@@ -23,7 +25,6 @@ export const signupUser = async (req, res, next) => {
         })
 
     } catch (error) {
-        logger.error(`error while signup`);
         next(error);
     }
 }

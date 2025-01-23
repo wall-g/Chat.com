@@ -1,18 +1,18 @@
 import express from 'express';
-import chats from './data/data.js';
 import cors from 'cors'
 import MongoConnection from './config/db.js';
-import * as dotenv from "dotenv";;
-import MysqlConnection from './config/mysql_db.js'
+import * as dotenv from "dotenv";
+import router from './routes/route.js';
+import { errorHandler, notFoundHandler } from './middlewares/errorMiddlewares.js';
 
 const app = express();
 app.use(cors());
-dotenv.config({debug:true});
+dotenv.config();
 
-
-app.get('/chats', (req, res) => {
-    res.json(chats);
-})
+app.use(express.json());
+app.use('/', router);
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 // const PORT = process.env.PORT || 3000;
 const PORT = 3000;
@@ -23,7 +23,6 @@ app.listen(PORT, () => {
 
 MongoConnection(process.env.MONGO_URI);
 
-MysqlConnection(process.env.MYSQL_DB_NAME, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, process.env.MYSQL_HOST);
 
 
 

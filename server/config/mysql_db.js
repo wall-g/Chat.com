@@ -1,24 +1,20 @@
 import { Sequelize } from 'sequelize';
+import * as dotenv from "dotenv";
 
-const MysqlConnection = (db_name, db_user, db_password, db_host) => {
-    const sequelize = new Sequelize(
-        db_name,
-        db_user,
-        db_password,
-        {
-            host: db_host,
-            dialect: "mysql"
-        }
-    )
+dotenv.config();
 
-    sequelize.sync()
-        .then(() => console.log('MySQL connected sucessfully')
-        ).catch((err) => {
-            console.log(err);
-        })
-}
+const sequelize = new Sequelize(
+    process.env.MYSQL_DB_NAME,
+    process.env.MYSQL_USER,
+    process.env.MYSQL_PASSWORD,
+    {
+        host: process.env.MYSQL_HOST,
+        dialect: "mysql"
+    }
+)
 
-export default MysqlConnection;
+export default sequelize;
+
 
 
 
