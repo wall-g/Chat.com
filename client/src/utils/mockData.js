@@ -1,5 +1,12 @@
 
 export const registerDefaultData = {
+    'username': {
+        name: 'username',
+        value: '',
+        regex: '',
+        isRequired: true,
+        errors: []
+    },
     'email': {
         name: 'email',
         value: '',
@@ -10,7 +17,7 @@ export const registerDefaultData = {
     'password': {
         name: 'password',
         value: '',
-        regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+        regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$!%*?&#.]{8,}$/,
         isRequired: true,
         errors: []
     },
@@ -26,6 +33,23 @@ export const registerDefaultData = {
         value: null,
         regex: '',
         isRequired: false,
+        errors: []
+    }
+}
+
+export const loginDefaultData = {
+    'email': {
+        name: 'email',
+        value: '',
+        regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        isRequired: true,
+        errors: []
+    },
+    'password': {
+        name: 'password',
+        value: '',
+        regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$!%*?&#.]{8,}$/,
+        isRequired: true,
         errors: []
     }
 }

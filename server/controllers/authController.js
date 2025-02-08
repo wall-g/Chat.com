@@ -4,7 +4,10 @@ import logger from '../utils/logger.js'
 import jwt from 'jsonwebtoken'
 
 export const signupUser = async (req, res, next) => {
-    let { username, email, password, pic } = req.body;
+    let { username, email, password } = req.body;
+    const profile_pic = req.file ? req.file.path : null;
+    console.log(profile_pic, 'profile pic');
+    
     try {
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
@@ -15,7 +18,7 @@ export const signupUser = async (req, res, next) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         password = hashedPassword;
-        const user = await User.create({ username, email, password, pic });
+        const user = await User.create({ username, email, password, profile_pic });
         logger.info(`User registered: ${email}`);
         return res.status(200).json({
             success: true,
@@ -29,7 +32,11 @@ export const signupUser = async (req, res, next) => {
 }
 
 export const loginUser = async (req, res, next) => {
+    console.log(req.body, 'values =======>');
+    
     const { email, password } = req.body;
+    console.log(email, password, 'creds');
+    
     try {
         const user = await User.findOne({ where: { email } });
         if (!user) {
